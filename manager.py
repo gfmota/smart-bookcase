@@ -41,7 +41,7 @@ def main():
     if command == 1:
       bookcase.add_new_book(new_book(bookcase))
     elif command == 2:
-      print("You want to see all of your books")
+      bookcase.print()
     elif command == 3:
       print("You want to search something in your bookcase")
     elif command == 4:
