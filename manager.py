@@ -20,6 +20,17 @@ def open_bookcase():
 
   return Bookcase(books)
 
+def new_book(bookcase):
+  title = input("What is its title? ")
+  author = input("Who is the author? ")
+  genre = input("Which genre it is? ")
+  pages = input("How many pages does it have? ")
+  date = datetime.now()
+  with open('bookcase.csv', 'a') as bookcase_file:
+    csv_writer = csv.writer(bookcase_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+    csv_writer.writerow([title, author, genre, str(date), pages])
+  return Book(title, author, genre, date, int(pages))
+
 def main():
   print("Welcome to your SmartBookcase! What would you want today?\n")
 
@@ -28,7 +39,7 @@ def main():
   while True:
     command = int(input("Type 1 if you want to add a new book to your bookcase.\nType 2 if you want to see all of your bookcase.\nType 3 if you want to search by something in your bookcase.\nType 4 if you want to QUIT.\n"))
     if command == 1:
-      print("You want to add a new book")
+      bookcase.add_new_book(new_book(bookcase))
     elif command == 2:
       print("You want to see all of your books")
     elif command == 3:
