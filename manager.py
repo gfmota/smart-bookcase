@@ -34,8 +34,11 @@ def new_book(bookcase):
 def search(bookcase):
   parameter = input("Which is the paramater?(Title, Author, Genre, Pages, Reading_date) ")
   value = input("What are you looking for? ")
-  result = Bookcase(bookcase.search_by_parameter(parameter, value))
-  result.print()
+  result = Bookcase(list(bookcase.search_by_parameter(parameter, value)))
+  if result.is_empty():
+    print("Didn't find anything.")
+  else:
+    result.print()
 
 def main():
   print("Welcome to your SmartBookcase! What would you want today?\n")

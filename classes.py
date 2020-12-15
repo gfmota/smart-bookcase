@@ -21,3 +21,6 @@ class Bookcase:
 
   def search_by_parameter(self, parameter, value):
     return filter(lambda book: getattr(book, parameter) == value, self.books)
+
+  def is_empty(self):
+    return self.books == []
