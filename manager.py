@@ -31,6 +31,12 @@ def new_book(bookcase):
     csv_writer.writerow([title, author, genre, str(date), pages])
   return Book(title, author, genre, date, int(pages))
 
+def search(bookcase):
+  parameter = input("Which is the paramater?(Title, Author, Genre, Pages, Reading_date) ")
+  value = input("What are you looking for? ")
+  result = Bookcase(bookcase.search_by_parameter(parameter, value))
+  result.print()
+
 def main():
   print("Welcome to your SmartBookcase! What would you want today?\n")
 
@@ -43,7 +49,7 @@ def main():
     elif command == 2:
       bookcase.print()
     elif command == 3:
-      print("You want to search something in your bookcase")
+      search(bookcase)
     elif command == 4:
       break;
     elif command != 0:
