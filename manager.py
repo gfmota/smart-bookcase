@@ -46,7 +46,7 @@ def main():
   bookcase = open_bookcase()
 
   while True:
-    command = input("Type 1 if you want to add a new book to your bookcase.\nType 2 if you want to see all of your bookcase.\nType 3 if you want to search by something in your bookcase.\nType 4 if you want to QUIT.\n")
+    command = input("Type 1 if you want to add a new book to your bookcase.\nType 2 if you want to see all of your bookcase.\nType 3 if you want to search by something in your bookcase.\nType 4 if you want to know how much pages you have read.\nType 5 if you want to QUIT.\n")
     try:
       command = int(command)
       if command == 1:
@@ -56,6 +56,8 @@ def main():
       elif command == 3:
         search(bookcase)
       elif command == 4:
+        print(bookcase.all_pages())
+      elif command == 5:
         break;
       elif command != 0:
         print("Please, type a valid command.")
