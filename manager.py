@@ -1,7 +1,7 @@
 from classes import Book
 from classes import Bookcase
-import csv
 from datetime import datetime
+import csv
 
 def open_bookcase():
   try:
@@ -46,18 +46,22 @@ def main():
   bookcase = open_bookcase()
 
   while True:
-    command = int(input("Type 1 if you want to add a new book to your bookcase.\nType 2 if you want to see all of your bookcase.\nType 3 if you want to search by something in your bookcase.\nType 4 if you want to QUIT.\n"))
-    if command == 1:
-      bookcase.add_new_book(new_book(bookcase))
-    elif command == 2:
-      bookcase.print()
-    elif command == 3:
-      search(bookcase)
-    elif command == 4:
-      break;
-    elif command != 0:
+    command = input("Type 1 if you want to add a new book to your bookcase.\nType 2 if you want to see all of your bookcase.\nType 3 if you want to search by something in your bookcase.\nType 4 if you want to QUIT.\n")
+    try:
+      command = int(command)
+      if command == 1:
+        bookcase.add_new_book(new_book(bookcase))
+      elif command == 2:
+        bookcase.print()
+      elif command == 3:
+        search(bookcase)
+      elif command == 4:
+        break;
+      elif command != 0:
+        print("Please, type a valid command.")
+    except:
       print("Please, type a valid command.")
-
+    
 
 if __name__ == "__main__":
     main()
