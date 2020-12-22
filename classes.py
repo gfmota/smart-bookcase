@@ -24,3 +24,9 @@ class Bookcase:
 
   def is_empty(self):
     return self.books == []
+  
+  def all_pages(self):
+    som = 0
+    for book in self.books:
+      som += book.pages
+    return som
