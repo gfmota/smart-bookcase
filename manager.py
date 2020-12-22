@@ -1,6 +1,6 @@
 from classes import Book
 from classes import Bookcase
-from datetime import datetime
+from datetime import date
 import csv
 
 def open_bookcase():
@@ -25,10 +25,10 @@ def new_book(bookcase):
   author = input("Who is the author? ")
   genre = input("Which genre it is? ")
   pages = input("How many pages does it have? ")
-  date = datetime.now()
+  today_date = date.today()
   with open('bookcase.csv', 'a') as bookcase_file:
     csv_writer = csv.writer(bookcase_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-    csv_writer.writerow([title, author, genre, str(date), pages])
+    csv_writer.writerow([title, author, genre, str(today_date), pages])
   return Book(title, author, genre, date, int(pages))
 
 def search(bookcase):
@@ -49,19 +49,20 @@ def main():
     command = input("Type 1 if you want to add a new book to your bookcase.\nType 2 if you want to see all of your bookcase.\nType 3 if you want to search by something in your bookcase.\nType 4 if you want to know how much pages you have read.\nType 5 if you want to QUIT.\n")
     try:
       command = int(command)
-      if command == 1:
-        bookcase.add_new_book(new_book(bookcase))
-      elif command == 2:
-        bookcase.print()
-      elif command == 3:
-        search(bookcase)
-      elif command == 4:
-        print(bookcase.all_pages())
-      elif command == 5:
-        break;
-      elif command != 0:
-        print("Please, type a valid command.")
     except:
+      print("Please, type a valid command.")
+      continue
+    if command == 1:
+      bookcase.add_new_book(new_book(bookcase))
+    elif command == 2:
+      bookcase.print()
+    elif command == 3:
+      search(bookcase)
+    elif command == 4:
+      print(bookcase.all_pages())
+    elif command == 5:
+      break;
+    elif command != 0:
       print("Please, type a valid command.")
     
 
