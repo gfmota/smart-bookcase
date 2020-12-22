@@ -40,6 +40,12 @@ def search(bookcase):
   else:
     result.print()
 
+def sum_pages(bookcase):
+  print("Please enter the dates in this form YYYY-MM-DD\nLeave in blank to count all bookcase's lifetime")
+  date_from = input("Date from: ")
+  date_to = input("Date to: ")
+  print(bookcase.all_pages(date_from, date_to))
+
 def main():
   print("Welcome to your SmartBookcase! What would you want today?\n")
 
@@ -59,7 +65,7 @@ def main():
     elif command == 3:
       search(bookcase)
     elif command == 4:
-      print(bookcase.all_pages())
+      sum_pages(bookcase)
     elif command == 5:
       break;
     elif command != 0:

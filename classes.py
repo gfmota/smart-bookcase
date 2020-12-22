@@ -1,3 +1,5 @@
+from datetime import date
+
 class Book:
   def __init__(self, title, author, genre, reading_date, pages):
     self.title = title
@@ -25,8 +27,18 @@ class Bookcase:
   def is_empty(self):
     return self.books == []
   
-  def all_pages(self):
+  def all_pages(self, date_from, date_to):
     som = 0
+    try:
+      date_from = date.fromisoformat(date_from)
+    except:
+      date_from = date.min
+    try:
+      date_to = date.fromisoformat(date_to)
+    except:
+      date_to = date.max
     for book in self.books:
-      som += book.pages
+      book_date = date.fromisoformat(book.reading_date)
+      if book_date > date_from and book_date < date_to:
+        som += book.pages
     return som
