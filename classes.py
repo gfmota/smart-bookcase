@@ -27,7 +27,7 @@ class Bookcase:
   def is_empty(self):
     return self.books == []
   
-  def all_pages(self, date_from, date_to):
+  def sum_pages(self, date_from, date_to):
     som = 0
     try:
       date_from = date.fromisoformat(date_from)
