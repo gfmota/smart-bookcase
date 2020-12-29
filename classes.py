@@ -27,6 +27,19 @@ class Bookcase:
   def is_empty(self):
     return self.books == []
   
+  def order_by_parameter(self, parameter):
+    ordered_books = self.books
+    leng = len(ordered_books)
+    for i in range(1, leng):
+      actual = ordered_books[i]
+      j = i
+      for j in range(i, -1, -1):
+        ordered_books[j] = ordered_books[j - 1]
+        if getattr(ordered_books[j - 1], parameter) <= getattr(actual, parameter):
+          break
+      ordered_books[j] = actual
+    return Bookcase(ordered_books)
+
   def sum_pages(self, date_from, date_to):
     som = 0
     try:

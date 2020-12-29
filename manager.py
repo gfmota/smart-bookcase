@@ -33,6 +33,14 @@ def new_book():
   
   return Book(title, author, genre, date, int(pages))
 
+def print_by_parameter(bookcase):
+  while True:  
+    parameter = input("By which parameter would you like to order it? (title, author, pages or reading_date) ")
+    if parameter != "title" and parameter != "author" and parameter != "pages" and parameter != "reading_date":
+      print("Please enter a valid parameter.")
+      continue
+    return bookcase.order_by_parameter(parameter)
+
 def search(bookcase):
   title = input("What title you looking for? ")
   author = input("What author you looking for? ")
@@ -66,7 +74,7 @@ def main():
     if command == 1:
       bookcase.add_new_book(new_book())
     elif command == 2:
-      bookcase.print()
+      print_by_parameter(bookcase).print()
     elif command == 3:
       search(bookcase)
     elif command == 4:
