@@ -14,15 +14,15 @@ class Bookcase:
   
   def add_new_book(self, new_book):
     self.books.append(new_book)
-  
+
   def print(self):
     ind = 1
     for book in self.books:
       print(str(ind) + ". " + book.title + ", by " + book.author)
       ind += 1
 
-  def search_by_parameter(self, parameter, value):
-    return filter(lambda book: getattr(book, parameter) == value, self.books)
+  def search_by_parameter(self, title, author, genre):
+    return filter(lambda book: (book.title == title or title == "") and (book.author == author or author =="") and (book.genre == genre or genre == ""), self.books)
 
   def is_empty(self):
     return self.books == []

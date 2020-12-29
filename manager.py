@@ -20,7 +20,7 @@ def open_bookcase():
 
   return Bookcase(books)
 
-def new_book(bookcase):
+def new_book():
   title = input("What is its title? ")
   author = input("Who is the author? ")
   genre = input("Which genre it is? ")
@@ -34,9 +34,10 @@ def new_book(bookcase):
   return Book(title, author, genre, date, int(pages))
 
 def search(bookcase):
-  parameter = input("Which is the paramater?(Title, Author, Genre, Pages, Reading_date) ")
-  value = input("What are you looking for? ")
-  result = Bookcase(list(bookcase.search_by_parameter(parameter, value)))
+  title = input("What title you looking for? ")
+  author = input("What author you looking for? ")
+  genre = input("What genre you looking for? ")
+  result = Bookcase(list(bookcase.search_by_parameter(title, author, genre)))
   
   if result.is_empty():
     print("Didn't find anything.")
@@ -63,7 +64,7 @@ def main():
       continue
     
     if command == 1:
-      bookcase.add_new_book(new_book(bookcase))
+      bookcase.add_new_book(new_book())
     elif command == 2:
       bookcase.print()
     elif command == 3:
@@ -74,7 +75,7 @@ def main():
       break;
     elif command != 0:
       print("Please, type a valid command.")
-    print("")
+    print("--------------------------------------")
     
 
 if __name__ == "__main__":
