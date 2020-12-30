@@ -22,7 +22,7 @@ class Bookcase:
       ind += 1
 
   def search_by_parameter(self, title, author, genre):
-    return filter(lambda book: (book.title == title or title == "") and (book.author == author or author =="") and (book.genre == genre or genre == ""), self.books)
+    return filter(lambda book: (book.title == title or title == "") and (book.author == author or author == "") and (list(filter(lambda book_genre: book_genre == genre, book.genre)) != [] or genre == ""), self.books)
 
   def is_empty(self):
     return self.books == []

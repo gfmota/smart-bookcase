@@ -10,7 +10,7 @@ def open_bookcase():
       next(csv_reader)
       books = []
       for line in csv_reader:
-        books.append(Book(line[0], line[1], line[2], line[3], int(line[4])))
+        books.append(Book(line[0], line[1], line[2].split(), line[3], int(line[4])))
 
   except FileNotFoundError:
     with open('bookcase.csv', 'w') as bookcase_file:
@@ -23,15 +23,15 @@ def open_bookcase():
 def new_book():
   title = input("What is its title? ")
   author = input("Who is the author? ")
-  genre = input("Which genre it is? ")
+  genre = input("Which genre it is?(Separate different genres with space)")
   pages = input("How many pages does it have? ")
   today_date = date.today()
-  
+
   with open('bookcase.csv', 'a') as bookcase_file:
     csv_writer = csv.writer(bookcase_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
     csv_writer.writerow([title, author, genre, str(today_date), pages])
   
-  return Book(title, author, genre, date, int(pages))
+  return Book(title, author, genre.split(), date, int(pages))
 
 def print_by_parameter(bookcase):
   while True:  
