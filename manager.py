@@ -31,7 +31,7 @@ def new_book():
     csv_writer = csv.writer(bookcase_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
     csv_writer.writerow([title, author, genre, str(today_date), pages])
   
-  return Book(title, author, genre.split(), date, int(pages))
+  return Book(title, author, genre, today_date, int(pages))
 
 def print_by_parameter(bookcase):
   while True:
