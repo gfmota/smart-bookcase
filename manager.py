@@ -34,13 +34,11 @@ def new_book():
   return Book(title, author, genre.split(), date, int(pages))
 
 def print_by_parameter(bookcase):
-  while True:  
-    parameter = input("By which parameter would you like to order it? (title, author, pages or date) ")
-    if parameter != "title" and parameter != "author" and parameter != "pages" and parameter != "date":
+  while True:
+    parameter = input("By which parameter would you like to order it? (title, author, pages or reading_date) ")
+    if parameter != "title" and parameter != "author" and parameter != "pages" and parameter != "reading_date":
       print("Please enter a valid parameter.")
       continue
-    elif parameter == "date":
-      return bookcase
     return bookcase.order_by_parameter(parameter)
 
 def search(bookcase):
