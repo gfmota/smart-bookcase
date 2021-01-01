@@ -1,5 +1,5 @@
 # SmartBookcase
-Manager for book reading using terminal
+Manager for book reading using terminal  
 Made to practice python and object orientaded learned in MAC0216 - Técnicas de Programação I at USP
 ## What can it do?
 * Manage books information
