@@ -10,7 +10,7 @@ def open_bookcase():
       next(csv_reader)
       books = []
       for line in csv_reader:
-        books.append(Book(line[0], line[1], line[2].split(), line[3], int(line[4])))
+        books.append(Book(line[0], line[1], line[2], date.fromisoformat(line[3]), int(line[4])))
 
   except FileNotFoundError:
     with open('bookcase.csv', 'w') as bookcase_file:
@@ -45,7 +45,7 @@ def search(bookcase):
   title = input("What title you looking for? ")
   author = input("What author you looking for? ")
   genre = input("What genre you looking for? ")
-  result = Bookcase(list(bookcase.search_by_parameter(title, author, genre)))
+  result = Bookcase(bookcase.search_by_parameter(title, author, genre))
   
   if result.is_empty():
     print("Didn't find anything.")

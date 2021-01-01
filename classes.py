@@ -22,7 +22,7 @@ class Bookcase:
       ind += 1
 
   def search_by_parameter(self, title, author, genre):
-    return filter(lambda book: (book.title == title or title == "") and (book.author == author or author == "") and (list(filter(lambda book_genre: book_genre == genre, book.genre)) != [] or genre == ""), self.books)
+    return list(filter(lambda book: (book.title == title or title == "") and (book.author == author or author == "") and (list(filter(lambda book_genre: book_genre == genre, book.genre)) != [] or genre == ""), self.books))
 
   def is_empty(self):
     return self.books == []
@@ -50,8 +50,9 @@ class Bookcase:
       date_to = date.fromisoformat(date_to)
     except:
       date_to = date.max
+    
     for book in self.books:
-      book_date = date.fromisoformat(book.reading_date)
-      if book_date > date_from and book_date < date_to:
+      if book.reading_date >= date_from and book.reading_date <= date_to:
         som += book.pages
+    
     return som
