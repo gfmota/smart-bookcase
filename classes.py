@@ -1,4 +1,5 @@
 from datetime import date
+from copy import copy
 
 class Book:
   def __init__(self, title, author, genre, reading_date, pages):
@@ -28,7 +29,7 @@ class Bookcase:
     return self.books == []
   
   def order_by_parameter(self, parameter):
-    ordered_books = self.books
+    ordered_books = copy(self.books)
     leng = len(ordered_books)
     for i in range(1, leng):
       actual = ordered_books[i]
