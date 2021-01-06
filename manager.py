@@ -31,11 +31,11 @@ def new_book():
     csv_writer = csv.writer(bookcase_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
     csv_writer.writerow([title, author, genre, str(today_date), pages])
   
-  return Book(title, author, genre, today_date, int(pages))
+  return Book(title.strip(), author.strip(), genre.strip(), today_date, int(pages))
 
 def print_by_parameter(bookcase):
   while True:
-    parameter = input("By which parameter would you like to order it? (title, author, pages or reading_date) ")
+    parameter = input("By which parameter would you like to order it? (title, author, pages or reading_date) ").strip()
     if parameter != "title" and parameter != "author" and parameter != "pages" and parameter != "reading_date":
       print("Please enter a valid parameter.")
       continue
@@ -45,7 +45,7 @@ def search(bookcase):
   title = input("What title you looking for? ")
   author = input("What author you looking for? ")
   genre = input("What genre you looking for? ")
-  result = Bookcase(bookcase.search_by_parameter(title, author, genre))
+  result = Bookcase(bookcase.search_by_parameter(title.strip(), author.strip(), genre.strip()))
   
   if result.is_empty():
     print("Didn't find anything.")
