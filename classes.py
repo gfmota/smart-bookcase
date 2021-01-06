@@ -1,4 +1,5 @@
 from datetime import date
+from string import capwords
 from copy import copy
 
 class Book:
@@ -19,7 +20,7 @@ class Bookcase:
   def print(self):
     ind = 1
     for book in self.books:
-      print(str(ind) + ". " + book.title + ", by " + book.author)
+      print(str(ind) + ". " + book.title.upper() + ", by " + capwords(book.author) + " (" + str(book.pages) + " pages, read in " + str(book.reading_date) + ").")
       ind += 1
 
   def search_by_parameter(self, title, author, genre):
