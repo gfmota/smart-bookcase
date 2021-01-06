@@ -4,9 +4,9 @@ from copy import copy
 
 class Book:
   def __init__(self, title, author, genre, reading_date, pages):
-    self.title = title
-    self.author = author
-    self.genre = genre.split()
+    self.title = title.lower()
+    self.author = author.lower()
+    self.genre = genre.lower().split()
     self.reading_date = reading_date
     self.pages = pages
   
@@ -24,7 +24,7 @@ class Bookcase:
       ind += 1
 
   def search_by_parameter(self, title, author, genre):
-    return list(filter(lambda book: (book.title == title or title == "") and (book.author == author or author == "") and (list(filter(lambda book_genre: book_genre == genre, book.genre)) != [] or genre == ""), self.books))
+    return list(filter(lambda book: (title.lower() in book.title or title == "") and (author.lower() in book.author or author == "") and (list(filter(lambda book_genre: genre.lower() in book_genre, book.genre)) != [] or genre == ""), self.books))
 
   def is_empty(self):
     return self.books == []
