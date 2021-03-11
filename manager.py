@@ -1,37 +1,18 @@
 from classes import Book
 from classes import Bookcase
 from datetime import date
-import csv
+import sqlite3
 
-def open_bookcase():
-  try:
-    with open('bookcase.csv', 'r') as bookcase_file:
-      csv_reader = csv.reader(bookcase_file)
-      next(csv_reader)
-      books = []
-      for line in csv_reader:
-        books.append(Book(line[0], line[1], line[2], date.fromisoformat(line[3]), int(line[4])))
-
-  except FileNotFoundError:
-    with open('bookcase.csv', 'w') as bookcase_file:
-      csv_writer = csv.writer(bookcase_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-      csv_writer.writerow(['title','author','genre','reading_date','pages'])
-    books = []
-
-  return Bookcase(books)
-
-def new_book():
-  title = input("What is its title? ")
-  author = input("Who is the author? ")
-  genre = input("Which genre it is?(Separate different genres with space)")
-  pages = input("How many pages does it have? ")
+def new_book(cursor):
+  title = input("What is its title? ").strip().lower()
+  author = input("Who is the author? ").strip().lower()
+  genre = input("Which genre it is?(Separate different genres with space)").strip()
+  pages = int(input("How many pages does it have? ").strip())
   today_date = date.today()
 
-  with open('bookcase.csv', 'a') as bookcase_file:
-    csv_writer = csv.writer(bookcase_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-    csv_writer.writerow([title, author, genre, str(today_date), pages])
+  cursor.execute("INSERT INTO Bookcase VALUES (?, ?, ?, ?, ?)", (title, author, genre, str(today_date), pages))
   
-  return Book(title.strip(), author.strip(), genre.strip(), today_date, int(pages))
+  return Book(title, author, genre, today_date, pages)
 
 def print_by_parameter(bookcase):
   while True:
@@ -60,7 +41,15 @@ def sum_pages(bookcase):
 
 def main():
   print("Welcome to your SmartBookcase! What would you want today?\n")
-  bookcase = open_bookcase()
+  
+  conn = sqlite3.connect('bookcase.sqlite')
+  cursor = conn.cursor()
+  cursor.execute("CREATE TABLE IF NOT EXISTS Bookcase (title TEXT, author TEXT, genre TEXT, reading_date TEXT, pages INTEGER)")
+  bookcase = cursor.execute("SELECT * FROM Bookcase").fetchall()
+  books = list()
+  for book in bookcase:
+    books.append(Book(book[0], book[1], book[2], date.fromisoformat(book[3]), int(book[4])))
+  bookcase = Bookcase(books)
 
   while True:
     command = input("Type 1 if you want to add a new book to your bookcase.\nType 2 if you want to see all of your bookcase.\nType 3 if you want to search by something in your bookcase.\nType 4 if you want to know how much pages you have read.\nType 5 if you want to QUIT.\n")
@@ -72,7 +61,8 @@ def main():
       continue
     
     if command == 1:
-      bookcase.add_new_book(new_book())
+      bookcase.add_new_book(new_book(cursor))
+      conn.commit()
     elif command == 2:
       print_by_parameter(bookcase).print()
     elif command == 3:
@@ -80,7 +70,7 @@ def main():
     elif command == 4:
       print(sum_pages(bookcase))
     elif command == 5:
-      break;
+      break
     elif command != 0:
       print("Please, type a valid command.")
     print("--------------------------------------")
