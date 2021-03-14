@@ -6,11 +6,17 @@ import sqlite3
 def new_book(cursor):
   title = input("What is its title? ").strip().lower()
   author = input("Who is the author? ").strip().lower()
-  genre = input("Which genre it is?(Separate different genres with space)").strip()
+  genre = input("Which genre it is?").strip()
   pages = int(input("How many pages does it have? ").strip())
   today_date = date.today()
 
-  cursor.execute("INSERT INTO Bookcase VALUES (?, ?, ?, ?, ?)", (title, author, genre, str(today_date), pages))
+  cursor.execute("INSERT OR IGNORE INTO Author (name) VALUES (?)", (author,))
+  cursor.execute("SELECT id FROM Author WHERE name=?", (author,))
+  author_id = cursor.fetchone()[0]
+  cursor.execute("INSERT OR IGNORE INTO Genre (name) VALUES (?)", (genre,))
+  cursor.execute("SELECT id FROM Genre WHERE name=?", (genre,))
+  genre_id = cursor.fetchone()[0]
+  cursor.execute("INSERT INTO Bookcase VALUES (?, ?, ?, ?, ?, ?, ?)", (title, author_id, genre_id, today_date.year, today_date.month, today_date.day, pages))
   
   return Book(title, author, genre, today_date, pages)
 
@@ -44,11 +50,21 @@ def main():
   
   conn = sqlite3.connect('bookcase.sqlite')
   cursor = conn.cursor()
-  cursor.execute("CREATE TABLE IF NOT EXISTS Bookcase (title TEXT, author TEXT, genre TEXT, reading_date TEXT, pages INTEGER)")
-  bookcase = cursor.execute("SELECT * FROM Bookcase").fetchall()
+  cursor.execute('''CREATE TABLE IF NOT EXISTS Bookcase 
+      (title TEXT, author_id INTEGER, genre_id INTEGER, reading_year INTEGER, reading_month INTEGER, reading_day INTEGER, pages INTEGER)''')
+  cursor.execute('''CREATE TABLE IF NOT EXISTS Author
+      (id	INTEGER NOT NULL, name TEXT, PRIMARY KEY("id"))''')
+  cursor.execute('''CREATE TABLE IF NOT EXISTS Genre
+      (id	INTEGER NOT NULL, name TEXT, PRIMARY KEY("id"))''')
+  bookcase_data = cursor.execute("SELECT * FROM Bookcase").fetchall()
   books = list()
-  for book in bookcase:
-    books.append(Book(book[0], book[1], book[2], date.fromisoformat(book[3]), int(book[4])))
+  for book in bookcase_data:
+    cursor.execute("SELECT name FROM Author WHERE id=?", (book[1],))
+    author = cursor.fetchone()[0]
+    cursor.execute("SELECT name FROM Author WHERE id=?", (book[2],))
+    genre = cursor.fetchone()[0]
+    books.append(Book(book[0], author, genre, date(book[3], book[4], book[5]), book[6]))
+  
   bookcase = Bookcase(books)
 
   while True:
