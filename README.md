@@ -20,4 +20,4 @@ $ python manager.py
 ```
 Be sure to have python3 and sqlite3 installed in your pc
 ## SQL data relationship
-![SQL diagram](https://ibb.co/8NWxTps)
+![SQL diagram](https://i.ibb.co/xXpgP0L/sql-data-relationship.png)
